@@ -6,23 +6,59 @@
     <title>Document</title>
 
     <script src="https://unpkg.com/vue@3/dist/vue.global.js"></script>
+
+    <style>
+        body{
+            font-family: Arial,sans-serif;
+            margin: 0;
+            background-color: #f5f5f5;
+
+        }
+
+        header{
+            background-color:#263b5e ;
+            color: white;
+            padding: 20px;
+            text-align: center;
+        }
+
+        nav{
+            background-color: white;
+            padding: 20px;
+            border-radius: 8px;
+        }
+
+        main{
+            padding:20px;
+        }
+
+        .lessons-section{
+            background-color: white;
+            padding:20px;
+            border-radius: 8px;
+        }
+    </style>
 </head>
 <body>
-   <div id="mydiv">
-        <h1>{{ message }}</h1>
+    <div id="mydiv">
+
+        <header>
+            <h1>{{ message }}</h1>
+            <p>Find and book your after-school lessons.</p>
+        </header>
+
+        <nav>
+            <span>Lessons</span>
+            |
+            <span>Shopping Cart</span>
+        </nav>
+
+        <main>
+            <section class="lessons-section">
+                <h2>Available Lessons</h2>
+                <p>Our lessons will be displayed here.</p>
+            </section>
+        </main>
+
     </div>
-    
-    <script>
-        const { createApp } = Vue;
-
-        createApp({
-            data() {
-                return {
-                    message: "Welcome to After-School Lessons!"
-                };
-            }
-        }).mount("#mydiv");
-    </script>
-
-</body>
 </html>
