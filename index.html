@@ -1,3 +1,4 @@
+
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -8,37 +9,37 @@
     <script src="https://unpkg.com/vue@3/dist/vue.global.js"></script>
 
     <style>
-        body{
-            font-family: Arial,sans-serif;
+        body {
+            font-family: Arial, sans-serif;
             margin: 0;
             background-color: #f5f5f5;
-
         }
 
-        header{
-            background-color:#263b5e ;
+        header {
+            background-color: #263b5e;
             color: white;
             padding: 20px;
             text-align: center;
         }
 
-        nav{
+        nav {
             background-color: white;
             padding: 20px;
             border-radius: 8px;
         }
 
-        main{
-            padding:20px;
+        main {
+            padding: 20px;
         }
 
-        .lessons-section{
+        .lessons-section {
             background-color: white;
-            padding:20px;
+            padding: 20px;
             border-radius: 8px;
         }
     </style>
 </head>
+
 <body>
     <div id="mydiv">
 
@@ -55,127 +56,146 @@
 
         <main>
             <section class="lessons-section">
-                <h2>Available Lessons</h2>
-                <div v-for="lesson in lessons" :key="lesson.id">
-    <h3>Subject: {{ lesson.subject }}</h3>
-    <p>Location: {{ lesson.location }}</p>
-    <p>Price: Rs {{ lesson.price }}</p>
-    <p>Available slots: {{ lesson.available }}</p>
+    <h2>Available Lessons</h2>
 
-    <img :src="lesson.imagePath"
-         style="width:200px;"
-         :alt="lesson.imageAlt">
-</div>
+    <div>
+        <label>Sort by:</label>
+
+        <select v-model="sortType">
+            <option value="subject">Subject</option>
+            <option value="location">Location</option>
+            <option value="price">Price</option>
+            <option value="available">Available Spaces</option>
+        </select>
+
+        <select v-model="isAscending">
+            <option :value="true">Ascending</option>
+            <option :value="false">Descending</option>
+        </select>
+    </div>
+                <div v-for="lesson in lessons" :key="lesson.id">
+                    <h3>Subject: {{ lesson.subject }}</h3>
+                    <p>Location: {{ lesson.location }}</p>
+                    <p>Price: Rs {{ lesson.price }}</p>
+                    <p>Available slots: {{ lesson.available }}</p>
+
+                    <img :src="lesson.imagePath"
+                         style="width:200px;"
+                         :alt="lesson.imageAlt">
+                </div>
+
             </section>
         </main>
 
     </div>
 
     <script>
-    const { createApp } = Vue;
+        const { createApp } = Vue;
 
-    createApp({
-        data() {
-            return {
+        createApp({
+            data() {
+                return {
+                     message: "After-School Lessons",
 
-        lessons: [
-            {
-                id: 1001,
-                subject: "Computer Science",
-                location: "Hendon",
-                price: 700,
-                available: 5,
-                imagePath: "images/computer science lesson.jpg",
-                imageAlt: "Computer Science Lesson"
-            },
-            {
-                id: 1002,
-                subject: "Mathematics",
-                location: "Lagos, Nigeria",
-                price: 1000,
-                available: 5,
-                imagePath: "images/mathematics lesson for coursework.jpg",
-                imageAlt: "Mathematics Lesson"
-            },
-            {
-                id: 1003,
-                subject: "English Language",
-                location: "Heathrow, London",
-                price: 1500,
-                available: 5,
-                imagePath: "images/english language picture for coursework.jpg",
-                imageAlt: "English Language Lesson"
-            },
-            {
-                id: 1004,
-                subject: "Physics",
-                location: "Manchester",
-                price: 900,
-                available: 5,
-                imagePath: "images/physics lesson.jpg",
-                imageAlt: "Physics Lesson"
-            },
-            {
-                id: 1005,
-                subject: "Chemistry",
-                location: "Birmingham",
-                price: 1200,
-                available: 5,
-                imagePath: "images/chemistry lesson.jpg",
-                imageAlt: "Chemistry Lesson"
-            },
-            {
-                id: 1006,
-                subject: "Biology",
-                location: "London",
-                price: 850,
-                available: 5,
-                imagePath: "images/biology lesson.jpg",
-                imageAlt: "Biology Lesson"
-            },
-            {
-                id: 1007,
-                subject: "History",
-                location: "Dubai",
-                price: 750,
-                available: 5,
-                imagePath: "images/history lesson.jpg",
-                imageAlt: "History Lesson"
-            },
-            {
-                id: 1008,
-                subject: "Geography",
-                location: "Paris",
-                price: 950,
-                available: 5,
-                imagePath: "images/geography lesson.jpg",
-                imageAlt: "Geography Lesson"
-            },
-            {
-                id: 1009,
-                subject: "Economics",
-                location: "New York",
-                price: 1100,
-                available: 5,
-                imagePath: "images/economics lesson.jpg",
-                imageAlt: "Economics Lesson"
-            },
-            {
-                id: 1010,
-                subject: "Business Studies",
-                location: "Singapore",
-                price: 1300,
-                available: 5,
-                imagePath: "images/business studies lesson.jpg",
-                imageAlt: "Business Studies Lesson"
+    sortType: "subject",
+    isAscending: true,
+
+                    lessons: [
+                        {
+                            id: 1001,
+                            subject: "Computer Science",
+                            location: "Hendon",
+                            price: 700,
+                            available: 5,
+                            imagePath: "images/computer science lesson.jpg",
+                            imageAlt: "Computer Science Lesson"
+                        },
+                        {
+                            id: 1002,
+                            subject: "Mathematics",
+                            location: "Lagos, Nigeria",
+                            price: 1000,
+                            available: 5,
+                            imagePath: "images/mathematics lesson for coursework.jpg",
+                            imageAlt: "Mathematics Lesson"
+                        },
+                        {
+                            id: 1003,
+                            subject: "English Language",
+                            location: "Heathrow, London",
+                            price: 1500,
+                            available: 5,
+                            imagePath: "images/english language picture for coursework.jpg",
+                            imageAlt: "English Language Lesson"
+                        },
+                        {
+                            id: 1004,
+                            subject: "Physics",
+                            location: "Manchester",
+                            price: 900,
+                            available: 5,
+                            imagePath: "images/physics lesson.jpg",
+                            imageAlt: "Physics Lesson"
+                        },
+                        {
+                            id: 1005,
+                            subject: "Chemistry",
+                            location: "Birmingham",
+                            price: 1200,
+                            available: 5,
+                            imagePath: "images/chemistry lesson.jpg",
+                            imageAlt: "Chemistry Lesson"
+                        },
+                        {
+                            id: 1006,
+                            subject: "Biology",
+                            location: "London",
+                            price: 850,
+                            available: 5,
+                            imagePath: "images/biology lesson.jpg",
+                            imageAlt: "Biology Lesson"
+                        },
+                        {
+                            id: 1007,
+                            subject: "History",
+                            location: "Dubai",
+                            price: 750,
+                            available: 5,
+                            imagePath: "images/history lesson.jpg",
+                            imageAlt: "History Lesson"
+                        },
+                        {
+                            id: 1008,
+                            subject: "Geography",
+                            location: "Paris",
+                            price: 950,
+                            available: 5,
+                            imagePath: "images/geography lesson.jpg",
+                            imageAlt: "Geography Lesson"
+                        },
+                        {
+                            id: 1009,
+                            subject: "Economics",
+                            location: "New York",
+                            price: 1100,
+                            available: 5,
+                            imagePath: "images/economics lesson.jpg",
+                            imageAlt: "Economics Lesson"
+                        },
+                        {
+                            id: 1010,
+                            subject: "Business Studies",
+                            location: "Singapore",
+                            price: 1300,
+                            available: 5,
+                            imagePath: "images/business studies lesson.jpg",
+                            imageAlt: "Business Studies Lesson"
+                        }
+                    ]
+                };
             }
-        ]
-    };
-},
-    
-        
-    }).mount("#mydiv");
-</script>
+        }).mount("#mydiv");
+    </script>
 
 </body>
 </html>
