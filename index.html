@@ -56,24 +56,25 @@
 
         <main>
             <section class="lessons-section">
-    <h2>Available Lessons</h2>
+                <h2>Available Lessons</h2>
 
-    <div>
-        <label>Sort by:</label>
+                <div>
+                    <label>Sort by:</label>
 
-        <select v-model="sortType">
-            <option value="subject">Subject</option>
-            <option value="location">Location</option>
-            <option value="price">Price</option>
-            <option value="available">Available Spaces</option>
-        </select>
+                    <select v-model="sortType">
+                        <option value="subject">Subject</option>
+                        <option value="location">Location</option>
+                        <option value="price">Price</option>
+                        <option value="available">Available Spaces</option>
+                    </select>
 
-        <select v-model="isAscending">
-            <option :value="true">Ascending</option>
-            <option :value="false">Descending</option>
-        </select>
-    </div>
-                <div v-for="lesson in lessons" :key="lesson.id">
+                    <select v-model="isAscending">
+                        <option :value="true">Ascending</option>
+                        <option :value="false">Descending</option>
+                    </select>
+                </div>
+
+                <div v-for="lesson in sortedLessons" :key="lesson.id">
                     <h3>Subject: {{ lesson.subject }}</h3>
                     <p>Location: {{ lesson.location }}</p>
                     <p>Price: Rs {{ lesson.price }}</p>
@@ -82,6 +83,10 @@
                     <img :src="lesson.imagePath"
                          style="width:200px;"
                          :alt="lesson.imageAlt">
+
+                           <button :disabled="lesson.available === 0">
+        Add to Cart
+    </button>
                 </div>
 
             </section>
@@ -95,10 +100,10 @@
         createApp({
             data() {
                 return {
-                     message: "After-School Lessons",
+                    message: "After-School Lessons",
 
-    sortType: "subject",
-    isAscending: true,
+                    sortType: "subject",
+                    isAscending: true,
 
                     lessons: [
                         {
@@ -193,7 +198,32 @@
                         }
                     ]
                 };
+            },
+
+            computed: {
+                sortedLessons() {
+                    let sorted = this.lessons.slice();
+
+                    sorted.sort((a, b) => {
+                        let result;
+
+                        if (this.sortType === "subject" || this.sortType === "location") {
+                            result = a[this.sortType].localeCompare(b[this.sortType]);
+                        } else {
+                            result = a[this.sortType] - b[this.sortType];
+                        }
+
+                        if (this.isAscending) {
+                            return result;
+                        } else {
+                            return -result;
+                        }
+                    });
+
+                    return sorted;
+                }
             }
+
         }).mount("#mydiv");
     </script>
 
