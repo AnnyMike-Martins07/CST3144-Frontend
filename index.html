@@ -7,15 +7,20 @@
     <title>After School Activities</title>
 </head>
 <body>
-   <h1>After School Activities</h1>
+   <script src="https://unpkg.com/vue@3/dist/vue.global.js"></script>  <!-- Loads Vue 3 so we can use Vue in our webpage. -->
 
-   <p>Discover and book after-school lesson</p>
+<div id="App">
+    <h1>After School Activities</h1> <!-- Displays the website heading. -->
 
-   <h2>Explore our Lessons</h2>
+    <p>Discover and book after-school lesson</p> <!-- Displays the website description. --> 
 
-   <div id="App">
-    
+    <h2>Explore our Lessons</h2>  <!-- Displays the lessons section heading. -->
    </div>
+
+   <script>
+    const { createApp } = Vue;  // Gets Vue's createApp function.
+    createApp({}).mount("#App"); // Creates a Vue application and connects it to the HTML element with the ID App.
+</script> 
 
 </body>
 </html>
