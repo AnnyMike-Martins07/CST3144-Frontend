@@ -5,21 +5,53 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>After School Activities</title>
+
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.7.2/css/all.min.css"> <!-- Loads Font Awesome so we can display icons on our webpage. -->
 </head>
 <body>
    <script src="https://unpkg.com/vue@3/dist/vue.global.js"></script>  <!-- Loads Vue 3 so we can use Vue in our webpage. -->
 
-<div id="App">
+<div id="mydiv">
     <h1>After School Activities</h1> <!-- Displays the website heading. -->
 
     <p>Discover and book after-school lesson</p> <!-- Displays the website description. --> 
 
     <h2>Explore our Lessons</h2>  <!-- Displays the lessons section heading. -->
+
+<div v-for="lesson in lessons" :key="lesson.id"> <!-- Repeats this section once for every lesson in the lessons list. -->
+
+    <img :src="lesson.image" :alt="lesson.subject" width="250" heigth="180" > <!-- Displays the lesson's image and uses its subject as alternative text. -->
+
+    <h3>{{ lesson.subject }}</h3> <!-- Displays the subject of the current lesson as a heading. -->
+
+    <p>Location: {{ lesson.location }}</p> <!-- Displays where the lesson takes place. -->
+
+    <p>Price: {{ lesson.price }}</p> <!-- Displays the lesson's price. -->
+
+    <p>Available spaces: {{ lesson.spaces }}</p> <!-- Displays how many spaces are available. -->
+
+
+</div> <!-- Ends the section for one lesson. -->
    </div>
 
    <script>
     const { createApp } = Vue;  // Gets Vue's createApp function.
-    createApp({}).mount("#App"); // Creates a Vue application and connects it to the HTML element with the ID App.
+    createApp({data(){ // Creates a function that stores the information our website will use.
+        return{ // Returns the information to the Vue application.
+        lessons :[
+     {id: 1, subject: "Mathematics" , location:"Hendon, London" , price: 1500, spaces: 5, image: "Images For Annie's Frontend/mathematics_image.jpg"},
+    {id: 2, subject: "English" , location:"Tennessee, America" , price: 2500, spaces: 5, image: "Images For Annie's Frontend/english lesson image.jpg"},
+    {id: 3, subject: "French" , location:"Lyon, France" , price: 1580, spaces: 5, image: "Images For Annie's Frontend/french lesson.jpg"},
+    {id: 4, subject: "History" , location:"Abuja, Nigeria" , price: 1200, spaces: 5, image: "Images For Annie's Frontend/history lesson.webp"},
+    {id: 5, subject: "Music" , location:"Kara, Togo" , price: 950, spaces: 5, image: "Images For Annie's Frontend/music lesson.jpg"},
+    {id: 6, subject: "Business Administration" , location:"Hendon, London" , price: 1500, spaces: 5, image: "Images For Annie's Frontend/Business-Administration-Course.jpg"},
+    {id: 7, subject: "Digital Marketing" , location:"Texas, America" , price: 1100, spaces: 5, image: "Images For Annie's Frontend/Digital-Marketing-Course.png"},
+    {id: 8, subject: "Web Design" , location:"Lagos, Nigeria" , price: 1000, spaces: 5, image: "Images For Annie's Frontend/web design.jpg"},
+    {id: 9, subject: "Swimming" , location:"Paris, France" , price: 1200, spaces: 5, image: "Images For Annie's Frontend/swimming lessons.jpg"},
+    {id: 10, subject: "Science" , location:"Edmonton, Canada" , price: 1600, spaces: 5,image:"Images For Annie's Frontend/science lessons.jpeg"}
+] // Creates a list called lessons to store all 10 lesson records.
+        }
+    }}).mount("#mydiv"); // Creates the Vue application and connects it to the HTML element with the ID mydiv.
 </script> 
 
 </body>
