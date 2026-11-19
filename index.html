@@ -17,10 +17,26 @@
     <p>Discover and book after-school lesson</p> <!-- Displays the website description. --> 
 
     <h2>Explore our Lessons</h2>  <!-- Displays the lessons section heading. -->
+    
+    <div>
+    <select v-model="sortOrder">
+        <option value="ascending">Ascending</option>
+        <option value="descending">Descending</option>
+    </select>     <!-- Connects the selected order to Vue. -->
 
-<div v-for="lesson in lessons" :key="lesson.id"> <!-- Repeats this section once for every lesson in the lessons list. -->
+    <label>Sort by: </label>
+    <select v-model="sortBy"> <!-- Connects the selected sort option to Vue. -->
+        <option value="subject">Subject</option>
+        <option value="location">Location</option>
+        <option value="price">Price</option>
+        <option value="spaces">Spaces</option>
+    </select>
+    </div>
+        
 
-    <img :src="lesson.image" :alt="lesson.subject" width="250" heigth="180" > <!-- Displays the lesson's image and uses its subject as alternative text. -->
+<div v-for="lesson in Sortedlessons" :key="lesson.id"> <!-- Repeats this section once for every lesson in the lessons list. -->
+
+    <img :src="lesson.image" :alt="lesson.subject" width="250" height="180" > <!-- Displays the lesson's image and uses its subject as alternative text. -->
 
     <h3>{{ lesson.subject }}</h3> <!-- Displays the subject of the current lesson as a heading. -->
 
@@ -38,7 +54,10 @@
     const { createApp } = Vue;  // Gets Vue's createApp function.
     createApp({data(){ // Creates a function that stores the information our website will use.
         return{ // Returns the information to the Vue application.
-        lessons :[
+
+            sortBy: "subject",
+            sortOrder: "ascending",
+                   lessons :[
      {id: 1, subject: "Mathematics" , location:"Hendon, London" , price: 1500, spaces: 5, image: "Images For Annie's Frontend/mathematics_image.jpg"},
     {id: 2, subject: "English" , location:"Tennessee, America" , price: 2500, spaces: 5, image: "Images For Annie's Frontend/english lesson image.jpg"},
     {id: 3, subject: "French" , location:"Lyon, France" , price: 1580, spaces: 5, image: "Images For Annie's Frontend/french lesson.jpg"},
@@ -50,8 +69,58 @@
     {id: 9, subject: "Swimming" , location:"Paris, France" , price: 1200, spaces: 5, image: "Images For Annie's Frontend/swimming lessons.jpg"},
     {id: 10, subject: "Science" , location:"Edmonton, Canada" , price: 1600, spaces: 5,image:"Images For Annie's Frontend/science lessons.jpeg"}
 ] // Creates a list called lessons to store all 10 lesson records.
+        };
+    },
+
+        computed:{ // Creates a section for automatically calculated values.
+
+            Sortedlessons() {
+               const sorted = [...this.lessons]; // Creates a copy of the lessons list to sort.
+               if (this.sortBy === "subject") {
+                sorted.sort((a,b) => { // Sorts the lessons by subject in ascending order.
+                if (this.sortOrder === "ascending") {
+                    return a.subject.localeCompare(b.subject);
+                } else {return b.subject.localeCompare(a.subject); // Sorts the lessons by subject in descending order.
+
+                }
+            });
         }
-    }}).mount("#mydiv"); // Creates the Vue application and connects it to the HTML element with the ID mydiv.
+
+    
+
+
+            else if (this.sortBy === "location") {
+            sorted.sort((a, b) =>{
+                if (this.sortOrder === "ascending"){
+                    return a.location.localeCompare(b.location);
+
+                }
+                else{
+                    return b.location.localeCompare(a.location);
+                }
+            });
+        }else if(this.sortBy === "price") {
+            sorted.sort ((a,b) => {
+                if (this.sortOrder === "ascending") {
+                    return a.price - b.price;
+                    } else{return b.price - a.price;}
+            });
+            }else if(this.sortBy === "spaces") {
+                sorted.sort((a, b) => {
+                    if(this.sortOrder === "ascending") {
+                        return a.spaces - b.spaces;
+                    } else {
+                        return b.spaces-a.spaces;
+
+                    }
+                });
+                }
+                return sorted;
+
+            }
+        }
+    
+    }).mount("#mydiv"); // Creates the Vue application and connects it to the HTML element with the ID mydiv.
 </script> 
 
 </body>
