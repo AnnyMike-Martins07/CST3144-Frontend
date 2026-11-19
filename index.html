@@ -6,15 +6,15 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>After School Activities</title>
 
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.7.2/css/all.min.css"> <!-- Loads Font Awesome so we can display icons on our webpage. -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.7.2/css/all.min.css"> 
 </head>
 <body>
-   <script src="https://unpkg.com/vue@3/dist/vue.global.js"></script>  <!-- Loads Vue 3 so we can use Vue in our webpage. -->
+   <script src="https://unpkg.com/vue@3/dist/vue.global.js"></script>  
 
 <div id="mydiv">
-    <h1>After School Activities</h1> <!-- Displays the website heading. -->
+    <h1>After School Activities</h1> 
 
-    <p>Discover and book after-school lesson</p> <!-- Displays the website description. --> 
+    <p>Discover and book after-school lesson</p> 
 
     
     <button v-on:click="showCart = !showCart" :disabled="cart.length ===0">Shopping Cart ({{cart.length}})</button>
@@ -27,10 +27,10 @@
     <select v-model="sortOrder">
         <option value="ascending">Ascending</option>
         <option value="descending">Descending</option>
-    </select>     <!-- Connects the selected order to Vue. -->
+    </select>     
 
     <label>Sort by: </label>
-    <select v-model="sortBy"> <!-- Connects the selected sort option to Vue. -->
+    <select v-model="sortBy"> 
         <option value="subject">Subject</option>
         <option value="location">Location</option>
         <option value="price">Price</option>
@@ -42,15 +42,15 @@
 <div v-if="!showCart">
     <div v-for="lesson in Sortedlessons" :key="lesson.id">
 
-    <img :src="lesson.image" :alt="lesson.subject" width="250" height="180" > <!-- Displays the lesson's image and uses its subject as alternative text. -->
+    <img :src="lesson.image" :alt="lesson.subject" width="250" height="180" > 
 
-    <h3>{{ lesson.subject }}</h3> <!-- Displays the subject of the current lesson as a heading. -->
+    <h3>{{ lesson.subject }}</h3> 
 
-    <p>Location: {{ lesson.location }}</p> <!-- Displays where the lesson takes place. -->
+    <p>Location: {{ lesson.location }}</p> 
 
-    <p>Price: {{ lesson.price }}</p> <!-- Displays the lesson's price. -->
+    <p>Price: {{ lesson.price }}</p>
 
-    <p>Available spaces: {{ lesson.spaces }}</p> <!-- Displays how many spaces are available. -->
+    <p>Available spaces: {{ lesson.spaces }}</p>
 
     
     <button v-on:click="addToCart(lesson)" :disabled="lesson.spaces === 0">Add to Cart</button>
@@ -68,21 +68,31 @@
     <p>Price: {{lesson.price}}</p>
 
     <button v-on:click="removeFromCart(index)">Remove</button>
+
 </div>
    </div>
-   <h3>Total Price: {{totalPrice}}</h3>
+   
+    <label>Name:</label>
+    <input type="text" v-model="customerName" placeholder="Enter your name">
+
+    <label>Phone Number:</label>
+    <input type="text" v-model="customerPhone" placeholder="Enter your phone number">
+
+    <h3>Total Price: {{totalPrice}}</h3>
 </div>
 
    <script>
-    const { createApp } = Vue;  // Gets Vue's createApp function.
-    createApp({data(){ // Creates a function that stores the information our website will use.
-        return{ // Returns the information to the Vue application.
+    const { createApp } = Vue;  
+    createApp({data(){ 
+        return{ 
 
             sortBy: "subject",
             sortOrder: "ascending",
 
-            cart:[], // Creates an empty list called cart to store the lessons the user adds to their cart.
+            cart:[], 
             showCart:false,
+            customerName: "",
+            customerPhone: "",
                    lessons :[
      {id: 1, subject: "Mathematics" , location:"Hendon, London" , price: 1500, spaces: 5, image: "Images For Annie's Frontend/mathematics_image.jpg"},
     {id: 2, subject: "English" , location:"Tennessee, America" , price: 2500, spaces: 5, image: "Images For Annie's Frontend/english lesson image.jpg"},
@@ -94,19 +104,19 @@
     {id: 8, subject: "Web Design" , location:"Lagos, Nigeria" , price: 1000, spaces: 5, image: "Images For Annie's Frontend/web design.jpg"},
     {id: 9, subject: "Swimming" , location:"Paris, France" , price: 1200, spaces: 5, image: "Images For Annie's Frontend/swimming lessons.jpg"},
     {id: 10, subject: "Science" , location:"Edmonton, Canada" , price: 1600, spaces: 5,image:"Images For Annie's Frontend/science lessons.jpeg"}
-] // Creates a list called lessons to store all 10 lesson records.
+] 
         };
     },
 
-        computed:{ // Creates a section for automatically calculated values.
+        computed:{ 
 
             Sortedlessons() {
-               const sorted = [...this.lessons]; // Creates a copy of the lessons list to sort.
+               const sorted = [...this.lessons]; 
                if (this.sortBy === "subject") {
-                sorted.sort((a,b) => { // Sorts the lessons by subject in ascending order.
+                sorted.sort((a,b) => { 
                 if (this.sortOrder === "ascending") {
                     return a.subject.localeCompare(b.subject);
-                } else {return b.subject.localeCompare(a.subject); // Sorts the lessons by subject in descending order.
+                } else {return b.subject.localeCompare(a.subject); 
 
                 }
                 return sorted;
@@ -196,7 +206,7 @@
             }
         }
     
-    }).mount("#mydiv"); // Creates the Vue application and connects it to the HTML element with the ID mydiv.
+    }).mount("#mydiv"); 
 </script> 
 
 </body>
