@@ -16,8 +16,13 @@
 
     <p>Discover and book after-school lesson</p> <!-- Displays the website description. --> 
 
-    <h2>Explore our Lessons</h2>  <!-- Displays the lessons section heading. -->
     
+    <button v-on:click="showCart = !showCart" :disabled="cart.length ===0">Shopping Cart ({{cart.length}})</button>
+    
+     <div v-if="!showCart">
+        <h2>Explore our Lessons</h2>
+    </div>
+
     <div>
     <select v-model="sortOrder">
         <option value="ascending">Ascending</option>
@@ -34,7 +39,8 @@
     </div>
         
 
-<div v-for="lesson in Sortedlessons" :key="lesson.id"> <!-- Repeats this section once for every lesson in the lessons list. -->
+<div v-if="!showCart">
+    <div v-for="lesson in Sortedlessons" :key="lesson.id">
 
     <img :src="lesson.image" :alt="lesson.subject" width="250" height="180" > <!-- Displays the lesson's image and uses its subject as alternative text. -->
 
@@ -45,12 +51,27 @@
     <p>Price: {{ lesson.price }}</p> <!-- Displays the lesson's price. -->
 
     <p>Available spaces: {{ lesson.spaces }}</p> <!-- Displays how many spaces are available. -->
+
     
     <button v-on:click="addToCart(lesson)" :disabled="lesson.spaces === 0">Add to Cart</button>
+        </div>
+</div>
 
 
-</div> <!-- Ends the section for one lesson. -->
+
+<div v-if="showCart">
+    <h2>Shopping Cart</h2> 
+
+ <div v-for="(lesson, index) in cart" :key="index">
+    <h3>{{lesson.subject}}</h3>
+    <p>Location:{{lesson.location}}</p>
+    <p>Price: {{lesson.price}}</p>
+
+    <button v-on:click="removeFromCart(index)">Remove</button>
+</div>
    </div>
+   <h3>Total Price: {{totalPrice}}</h3>
+</div>
 
    <script>
     const { createApp } = Vue;  // Gets Vue's createApp function.
@@ -61,6 +82,7 @@
             sortOrder: "ascending",
 
             cart:[], // Creates an empty list called cart to store the lessons the user adds to their cart.
+            showCart:false,
                    lessons :[
      {id: 1, subject: "Mathematics" , location:"Hendon, London" , price: 1500, spaces: 5, image: "Images For Annie's Frontend/mathematics_image.jpg"},
     {id: 2, subject: "English" , location:"Tennessee, America" , price: 2500, spaces: 5, image: "Images For Annie's Frontend/english lesson image.jpg"},
@@ -87,7 +109,37 @@
                 } else {return b.subject.localeCompare(a.subject); // Sorts the lessons by subject in descending order.
 
                 }
+                return sorted;
             });
+               }else if (this.sortBy === "location") {
+                sorted.sort((a,b) => {
+                    if (this.sortOrder === "ascending") {
+                    return a.location.localeCompare(b.location);
+                } else {return b.location.localeCompare(a.location);
+
+                    }
+                });
+            
+                } else if (this.sortBy === "price") {
+                sorted.sort((a,b) => {
+                    if (this.sortOrder === "ascending") {
+                    return a.price.localeCompare(b.price);
+                } else {return b.price.localeCompare(a.price);
+
+                }
+            });
+
+            } else if (this.sortBy === "spaces") {
+                sorted.sort((a,b) => {
+                    if (this.spaces === "ascending") {
+                    return a.spaces.localeCompare(b.spaces);
+                } else {return b.spaces.localeCompare(a.spaces);
+
+                }
+            });
+
+    
+
         }
 
     
@@ -121,8 +173,13 @@
                 }
                 return sorted;
 
-            }
+            },
+            totalPrice() {
+            return this.cart.reduce ((total, lesson) => total + lesson.price, 0);
         },
+        },
+
+        
 
         methods:{
             addToCart(lesson) {
@@ -130,6 +187,12 @@
                     this.cart.push(lesson);
                     lesson.spaces--;
                 }
+            },
+
+            removeFromCart(index) {
+                const lesson = this.cart[index];
+                lesson.spaces++;
+                this.cart.splice(index, 1);
             }
         }
     
