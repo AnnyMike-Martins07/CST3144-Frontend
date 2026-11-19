@@ -45,6 +45,8 @@
     <p>Price: {{ lesson.price }}</p> <!-- Displays the lesson's price. -->
 
     <p>Available spaces: {{ lesson.spaces }}</p> <!-- Displays how many spaces are available. -->
+    
+    <button v-on:click="addToCart(lesson)" :disabled="lesson.spaces === 0">Add to Cart</button>
 
 
 </div> <!-- Ends the section for one lesson. -->
@@ -57,6 +59,8 @@
 
             sortBy: "subject",
             sortOrder: "ascending",
+
+            cart:[], // Creates an empty list called cart to store the lessons the user adds to their cart.
                    lessons :[
      {id: 1, subject: "Mathematics" , location:"Hendon, London" , price: 1500, spaces: 5, image: "Images For Annie's Frontend/mathematics_image.jpg"},
     {id: 2, subject: "English" , location:"Tennessee, America" , price: 2500, spaces: 5, image: "Images For Annie's Frontend/english lesson image.jpg"},
@@ -117,6 +121,15 @@
                 }
                 return sorted;
 
+            }
+        },
+
+        methods:{
+            addToCart(lesson) {
+                if(lesson.spaces > 0){
+                    this.cart.push(lesson);
+                    lesson.spaces--;
+                }
             }
         }
     
